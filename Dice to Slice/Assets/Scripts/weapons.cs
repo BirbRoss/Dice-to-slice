@@ -53,7 +53,9 @@ public class weapons : MonoBehaviour
                     selectedRenderer = selectedEnemy.GetComponent<Renderer>();
                     defaultColor = selectedRenderer.material.color;
 
-                    switch(selectedWeap)
+                    Debug.Log(selectedEnemy.name);
+
+                    switch (selectedWeap)
                     {
                         case 0: //sword
                             if (Vector3.Distance(Player.position, selectedEnemy.transform.position) <= attackDist) //If the enemyy is close enough
@@ -64,7 +66,7 @@ public class weapons : MonoBehaviour
                                     roller.diceRoll--;
                                     roller.updateUI();
                                     selectedEnemy.gameObject.GetComponent<takeDamage>().subDamage();
-
+                                    
                                     buttonSelected = false;
                                 }
                             }
@@ -80,6 +82,8 @@ public class weapons : MonoBehaviour
                                 selectedRenderer.material.color = Color.green;
                                 if (Input.GetMouseButtonDown(0))
                                 {
+                                    
+
                                     roller.diceRoll--;
                                     roller.updateUI();
                                     selectedEnemy.gameObject.GetComponent<takeDamage>().subDamage();
