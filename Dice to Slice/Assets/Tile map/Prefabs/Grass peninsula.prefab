@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7985805210306556443}
   - component: {fileID: 5275879891053168337}
   - component: {fileID: 9159409533043456931}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass peninsula
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3743712816000964094}
   - component: {fileID: 1445833263858868532}
   - component: {fileID: 683809568010413828}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass peninsula dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
