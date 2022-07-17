@@ -7,11 +7,15 @@ public class GridMovement : MonoBehaviour
     [SerializeField] bool moved = false;
     [SerializeField] diceRoller roller;
     [SerializeField] int layer = 3;
+    AudioSource walkSound;
+
+    public Animator animator;
 
     private void Start()
     {
         roller = GameObject.Find("DiceManager").GetComponent<diceRoller>();
         layer = LayerMask.GetMask("Ground");
+        walkSound = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +31,9 @@ public class GridMovement : MonoBehaviour
                 moved = true;
                 roller.diceRoll--;
                 roller.updateUI(); //Updates UI after the movement
+
+                animator.Play("walk");
+                walkSound.PlayOneShot(walkSound.clip);
             }
         }
 
@@ -40,6 +47,9 @@ public class GridMovement : MonoBehaviour
                 moved = true;
                 roller.diceRoll--;
                 roller.updateUI();
+
+                animator.Play("walk");
+                walkSound.PlayOneShot(walkSound.clip);
             }
         }
 

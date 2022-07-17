@@ -12,6 +12,8 @@ public class gameManager : MonoBehaviour
     public Button diceButton;
     public int moveTrack = 1;
 
+    public Animator animator;
+
 
     private void Update()
     {
@@ -52,10 +54,13 @@ public class gameManager : MonoBehaviour
 
     public void playerDied()
     {
-        Debug.Log("Player is dead");
-        //animation and shit
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void transitionToEnd()
+    {
+        Invoke("moveToNextLevel", 1);
+        animator.SetTrigger("FadeOut");
     }
 
     public void checkEndLevel()
@@ -69,19 +74,25 @@ public class gameManager : MonoBehaviour
                 if (enemiesDisabled == enemies.Length)
                 {
                     Debug.Log("Level is over");
-                    if (SceneManager.GetActiveScene().buildIndex != 3)
-                    {
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                        //Load next scene
-                    }
-                    else
-                    {
-                        SceneManager.LoadScene(0);
-                        //Loads main menu
-                    }
 
+                    transitionToEnd();
                 }
             }
+        }
+    }
+
+    public void moveToNextLevel()
+    {
+        if (SceneManager.GetActiveScene().buildIndex != 3)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //Load next scene
+        }
+        else
+        {
+            Destroy(GameObject.Find("Music"));
+            SceneManager.LoadScene(0);
+            //Loads main menu
         }
     }
 
