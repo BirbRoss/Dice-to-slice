@@ -14,6 +14,9 @@ public class weapons : MonoBehaviour
     bool swapDone;
     public Transform Player;
     public float attackDist = 1.0f;
+    public gameManager manager;
+    public Transform aoeRadius;
+    Vector3 aoeSphere;
 
     [SerializeField] LayerMask ignoreLayer = 3;
 
@@ -25,10 +28,16 @@ public class weapons : MonoBehaviour
     [SerializeField] Renderer selectedRenderer;
     [SerializeField] Color defaultColor;
 
+    private void Start()
+    {
+        aoeSphere = aoeRadius.position;
+    }
+
     void Update()
     {
         if (selectedRenderer != null)
         {
+            aoeRadius.position = aoeSphere;
             selectedRenderer.material.color = defaultColor;
             selectedRenderer = null;
         }
@@ -53,8 +62,6 @@ public class weapons : MonoBehaviour
                     selectedRenderer = selectedEnemy.GetComponent<Renderer>();
                     defaultColor = selectedRenderer.material.color;
 
-                    Debug.Log(selectedEnemy.name);
-
                     switch (selectedWeap)
                     {
                         case 0: //sword
@@ -66,8 +73,9 @@ public class weapons : MonoBehaviour
                                     roller.diceRoll--;
                                     roller.updateUI();
                                     selectedEnemy.gameObject.GetComponent<takeDamage>().subDamage();
-                                    
-                                    buttonSelected = false;
+
+                                    manager.checkEndLevel();
+                                    buttonSelected = false; 
                                 }
                             }
                             else
@@ -82,12 +90,11 @@ public class weapons : MonoBehaviour
                                 selectedRenderer.material.color = Color.green;
                                 if (Input.GetMouseButtonDown(0))
                                 {
-                                    
-
                                     roller.diceRoll--;
                                     roller.updateUI();
                                     selectedEnemy.gameObject.GetComponent<takeDamage>().subDamage();
 
+                                    manager.checkEndLevel();
                                     buttonSelected = false;
                                 }
                             }
@@ -101,6 +108,8 @@ public class weapons : MonoBehaviour
                             if (roller.diceRoll > 1)
                             {
                                 selectedRenderer.material.color = Color.green;
+                                aoeRadius.position = selectedEnemy.transform.position;
+
                                 if (Input.GetMouseButtonDown(0))
                                 {
                                     roller.diceRoll -= 2;
@@ -114,11 +123,13 @@ public class weapons : MonoBehaviour
                                     {
                                         if (enemyHits[x].gameObject.layer != ignoreLayer)
                                         {
+                                            Debug.Log(enemyHits[x].name);
                                             enemyHits[x].gameObject.GetComponent<takeDamage>().subDamage();
                                         }
                                         x++;
                                     }
 
+                                    manager.checkEndLevel();
                                     buttonSelected = false;
                                 }
                             }

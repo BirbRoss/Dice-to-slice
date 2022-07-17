@@ -34,6 +34,11 @@ public class takeDamage : MonoBehaviour
         }
         else if (health <= 0)
         {
+            foreach(Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+
             gameObject.SetActive(false);
         }
     }
